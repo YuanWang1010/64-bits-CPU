@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title></title>
+		<meta charset="utf-8" />
+		<style>
+			body{
+				background: url("images/bgImage.webp");
+  				background-repeat: no-repeat;
+  				background-size: 1500px 800px;
+			}
+		 	#front{
+		 		width:100%;
+				height:100px;
+				background-color:orange;
+		 	}
+			#center{
+				width:600px;
+				height:200px;
+				display:inline-block;
+				position: relative; 
+				top: 30px; 
+			}
+			#a{
+				width:200px;
+				height:200px; 
+				float:left;
+				display:inline-block;
+				position: relative; 
+				top: 30px; 
+			}
+			#first_a{
+				width:140px;
+				height:40px;
+				border:1px solid red;
+				border-radius:5px;
+				background-color:orange; 
+			}
+			#second_a{
+				width:140px;
+				height:40px;
+				border:1px solid red;
+				border-radius:5px;
+				background-color:orange; 
+			}
+			#third_a{
+				width:140px;
+				height:40px;
+				border:1px solid red;
+				border-radius:5px;
+				background-color:orange; 
+			}
+			#fourth_a{
+				width:140px;
+				height:40px;
+				border:1px solid red;
+				border-radius:5px;
+				background-color:orange; 
+			}
+			span{
+				float:right;
+				position:relative;
+				top:80px;
+				right:10px;
+			}
+			#image1{
+				float: right; 
+				display:inline-block;
+				position:relative;
+				top:30px;
+				right:27px;
+			}
+			#image2{
+				float: right; 
+				display:inline-block;
+				position:relative;
+				top:-350px;
+				right:15px;
+			}
+			#m{
+				position:absolute;
+				top:15px;
+				left:15px;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="front">
+			<span id="m">Yuan Wang - Technical Portfolio </span>
+			<span><a href="index.html">Home</a></span> 
+		</div>
+		<div id="a">
+			<div id="first_a">
+				<a href="technical.html">Technical Portfolio</a>
+			</div>
+			<br />
+			<div id="second_a">
+				<a href="qualifications.html">Qufications</a>
+			</div>	
+			<br />
+			<div id="third_a">
+				<a href="service.html">Service</a>
+			</div>
+			<br />
+			<div id="fourth_a">
+				<a href="e.html">AI-Generated</a>
+			</div>
+			<br />
+		</div>
+		<div id="center">
+			Demand for data storage is growing exponentially, but the capacity of existing storage media is not keeping up. 
+			However, DNA-based storage is extremely dense, above 1EB/mm3, and long-lasting, over 500 years. 
+			Therefore, in this research project, I want to do a simulation experiment that recovered a 600 kB message without error from a DNA-based storage system. 
+			<br />
+			<br /> 
+			DNA consists of four types of nucleotides: adenine, cytosine, guanine, and thymine. The storage system includes a DNA synthesizer, PCR Thermocycler, and DNA Sequencer.
+			DNA synthesizer encodes the data to be stored in DNA by using <a href="https://doi.org/10.1016/j.physleta.2018.12.011">XOR encoding</a>. PCR thermocycler amplifies the concentration of selected sequences of DNA within a pool. DNA Sequencer reads DNA sequences and converts them back into digital data. The basic unit of DNA storage is a 50 to 100-bit DNA strand in pools. 
+			<br /> 
+			<br /> 
+			To complete the project successfully, it is necessary to understand Polymerase chain reaction(PCR) and Key-value architecture. 
+			DNA sequencing primers can define the beginning and end of the region to be amplified. 
+			PCR can amplify desired data based on DNA sequencing primers, which gives us enough pieces of the same DNA data to study. 
+			(Link to PCR video). Without PCR, we need to go through and decode all DNA strands in the data pool to find the data we want. 
+			Too costly.
+			<div id = "PCR_link">
+				<a href="https://youtu.be/KIcxzSr6IcE">PCR explanation video</a>
+			</div>
+			<br /> 
+			Furthermore, Key-value Architecture can let us map a key to a pair of primers. 
+			In short, at write time, those primers are added to DNA strands. 
+			At read time, those same primers are used in PCR to amplify desired keys. 
+			<br /> 
+			<br /> 
+			In a nutshell, the area of DNA data storage is relatively new and has not reached the level of widespread application since the cost of synthesis and sequencing due to the current biotechnology. 
+			However, the potential in this field is great, helping the entire human civilization store a colossal amount of necessary data.   <a href="https://doi.org/10.1145/2872362.2872397
+			">DNA-data storage paper</a>
+			<br /> 
+			<br /> 
+			You can also understand the DNA-based storage system better based on the following video. 
+			<div id = "Goldman_link">
+				<a href="https://www.youtube.com/watch?v=NsfuBSsF1Fk">Information Storage in DNA by Nick Goldman</a>
+			</div>
+
+		</div>
+
+		<div id="image1">
+			<img src="images/technical1.png" style="width:450px;height:150px;">
+		</div>	
+		
+		<div id="image2">
+			<img src="images/technical2.png" style="width:650px;height:350px;">
+		</div>	
+	</body>
+</html>
+
+
+
+
