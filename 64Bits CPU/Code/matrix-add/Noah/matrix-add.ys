@@ -1,0 +1,155 @@
+    .pos 0
+    irmovq stack, %rsp
+    irmovq $3, %r8 # constant 3 (count for all loops)
+    irmovq $1, %r9 # constant 1 (used throughout)
+    call main
+    halt
+
+# 3 by 3 matrices
+matrix1:
+    .quad $1    # each element is a 64-bit integer
+    .quad $2
+    .quad $3
+    .quad $4
+    .quad $5
+    .quad $6
+    .quad $7
+    .quad $8
+    .quad $9
+
+matrix2:
+    .quad $10    # each element is a 64-bit integer
+    .quad $11
+    .quad $12
+    .quad $13
+    .quad $14
+    .quad $15
+    .quad $16
+    .quad $17
+    .quad $18
+
+result:
+    .quad $0    # each element is a 64-bit integer
+    .quad $0
+    .quad $0
+    .quad $0
+    .quad $0
+    .quad $0
+    .quad $0
+    .quad $0
+    .quad $0
+
+# matrix1 in %rdi, matrix2 in %rsi, result in %rax
+main:
+    irmovq matrix1, %rdi
+    irmovq matrix2, %rsi
+    irmovq result, %rax
+
+    call matrix_add
+    ret
+
+# i in %rcx, j in %rdx
+matrix_add:
+    irmovq $0, %rcx # i = 0
+
+    matrix_add_loop1:
+        irmovq $0, %rdx # j = 0
+
+        matrix_add_loop2:
+            # save registers
+            pushq %rdi
+            pushq %rsi
+            pushq %rax
+
+            # matrix offset: matrix1[i][j], matrix2[i][j], result[i][j]
+            rrmovq %rcx, %rdi
+            rrmovq %rdx, %rsi
+            call get_offset
+            rrmovq %rax, %r10 # %r10 stores offset for all matrices
+
+            # restore registers
+            popq %rax
+            popq %rsi
+            popq %rdi
+
+            # get matrix1[i][j] (%r11)
+            rrmovq %r10, %r11
+            addq %rdi, %r11
+            mrmovq (%r11), %r11
+
+            # get matrix2[i][j] (%r12)
+            rrmovq %r10, %r12
+            addq %rsi, %r12
+            mrmovq (%r12), %r12
+
+            # result[i][j] = matrix1[i][j] + matrix2[i][j]
+            addq %rax, %r10
+            addq %r11, %r12
+            rmmovq %r12, (%r10)
+
+            # ++j
+            addq %r9, %rdx
+            rrmovq %rdx, %r10
+
+            # is j - 3 == 0
+            subq %r8, %r10
+            jne matrix_add_loop2
+
+        # ++i
+        addq %r9, %rcx
+        rrmovq %rcx, %r10
+
+        # is i - 3 == 0
+        subq %r8, %r10
+        jne matrix_add_loop1
+        ret       
+
+# index0 in %rdi, index1 in %rsi
+get_offset:
+    # index0 * 3
+    pushq %rsi
+    irmovq $3, %rsi
+    call multiply
+    popq %rsi
+    
+    # index0 * 3 + index1
+    addq %rsi, %rax
+
+    # (index0 * 3 + index1) * 8
+    pushq %rdi
+    pushq %rsi
+    irmovq $8, %rdi
+    rrmovq %rax, %rsi
+    call multiply
+    popq %rsi
+    popq %rdi
+    
+    ret # result in %rax
+
+# num1 in %rdi, num2 in %rsi
+multiply:
+    irmovq $0, %rax
+    
+    # check if either is zero
+    andq %rdi, %rdi
+    je zero
+    andq %rsi, %rsi
+    je zero
+
+    pushq %r10 # save r10 before using
+    rrmovq %rdi, %r10 # count
+
+# num1 in %r10, num2 in %rsi, result in %rax
+multiply_loop:
+    addq %rsi, %rax
+    subq %r9, %r10
+    jne multiply_loop
+    
+    popq %r10 # restore r10
+    ret # result in %rax
+
+zero:
+    ret
+
+    .pos 0xf00
+stack:
